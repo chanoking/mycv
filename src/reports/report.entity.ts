@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Report {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ default: false })
+  approved: boolean;
 
   @Column()
   make: string;
@@ -12,17 +16,20 @@ export class Report {
   model: string;
 
   @Column()
-  year: Date;
+  year: number;
 
   @Column()
   mileage: number;
 
   @Column()
-  longitude: number;
+  lng: number;
 
   @Column()
-  latitude: number;
+  lat: number;
 
   @Column()
   price: number;
+
+  @ManyToOne(() => User, (user) => user.reports)
+  user: User;
 }
